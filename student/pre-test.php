@@ -62,7 +62,6 @@ include('../config/db.php');
                                                         $question = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
                                                         foreach ($question as $key => $q) {
-                                                            echo $m['id'];
 
                                                     ?>
 
