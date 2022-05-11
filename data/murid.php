@@ -157,3 +157,84 @@ if ($_GET['action'] == 'hapusMurid') {
         echo mysqli_error($conn);
     }
 }
+
+if ($_GET['action'] == 'getHasilPretest') {
+    $columns = array(
+        0 => 'id',
+        1 => 'student_name',
+        2 => 'login',
+        3 => 'student_address',
+        4 => 'class_id',
+        5 => 'action'
+    );
+
+    $sql = "SELECT * FROM student";
+    $query = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($query);
+
+    $totalData = $count;
+    $totalFiltered = $totalData;
+
+    $limit = $_POST['length'];
+    $start = $_POST['start'];
+    $order = $columns[$_POST['order']['0']['column']];
+    $dir = $_POST['order']['0']['dir'];
+
+    // var_dump($order);
+    if (empty($_POST['search']['value'])) {
+        // $result = mysqli_query($conn, "SELECT * FROM student order by {$order} {$dir} LIMIT {$limit} OFFSET {$start}");
+        $result = mysqli_query($conn, "SELECT * FROM student order by {$order} {$dir} LIMIT {$limit} OFFSET {$start}");
+        if (!$result) {
+            echo mysqli_error($conn);
+        }
+    } else {
+        $search = $_POST['search']['value'];
+        $result = mysqli_query($conn, "SELECT * FROM student WHERE student_name like '%{$search}%' order by {$order} {$dir} LIMIT {$limit} OFFSET {$start}");
+
+        $count = mysqli_num_rows($result);
+        $totalData = $count;
+        $totalFiltered = $totalData;
+    }
+
+    $data = array();
+    if (!empty($result)) {
+        $no = $start + 1;
+        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        foreach ($row as $r) {
+            $query = mysqli_query($conn, "SELECT * FROM class where id = '{$r['class_id']}'");
+            $kelas = mysqli_fetch_array($query, MYSQLI_ASSOC);
+
+            $query = mysqli_query($conn, "SELECT login FROM users WHERE id = '{$r['user_id']}'");
+            $nis = mysqli_fetch_array($query);
+
+            $query = mysqli_query($conn, "SELECT * FROM level_student WHERE student_id = '{$r['id']}'");
+            if (mysqli_num_rows($query) > 0) {
+                $result = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                $hasil = $result['level'];
+            } else {
+                $query = mysqli_query($conn, "SELECT * FROM pre_test_answer WHERE student_id = '{$r['id']}'");
+                if (mysqli_num_rows($query) > 0) {
+                    $hasil = 'Hasil Pre Test belum dihitung';
+                } else {
+                    $hasil = 'Belum ambil Pre Test';
+                }
+            }
+            $nestedData['no'] = $no;
+            $nestedData['murid'] = $r["student_name"];
+            $nestedData['nis'] = $nis['login'];
+            $nestedData['hasilPreTest'] = $hasil;
+            $nestedData['kelas'] = $kelas['class_name'];
+            $data[] = $nestedData;
+            $no++;
+        }
+    }
+
+    $json_data = array(
+        "draw" => intval($_POST['draw']),
+        "recordsTotal" => intval($totalData),
+        "recordsFiltered" => intval($totalFiltered),
+        "data" => $data
+    );
+
+    echo json_encode($json_data);
+}

@@ -44,12 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo mysqli_error($conn);
             }
         } else {
-            $sql = "INSERT INTO teachers (user_id, teacher_name, teacher_address, phone_number, email) VALUES ('{$row['id']}', '{$name}', '{$address}', '{$phone_number}','{$login}', '{$_POST['tipeguru']}')";
+            $sql = "INSERT INTO teachers (user_id, teacher_name, teacher_address, phone_number, email, teacher_type) VALUES ('{$row['id']}', '{$name}', '{$address}', '{$phone_number}','{$login}', '{$_POST['tipeguru']}')";
 
             $insert_guru = mysqli_query($conn, $sql);
 
             if (!$insert_guru) {
                 echo mysqli_error($conn);
+            } else {
             }
         }
 

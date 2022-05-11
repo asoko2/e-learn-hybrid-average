@@ -27,7 +27,24 @@
             <li><a class="m-link" href="kelas.php"><i class="icofont-read-book-alt"></i> <span>Kelas</span></a>
             </li>
             <li><a class="m-link" href="guru.php"><i class="icofont-teacher"></i> <span>Guru</span></a></li>
-            <li><a class="m-link" href="pre-test.php"><i class="icofont-law-document"></i> <span>Pre Test</span></a>
+            <!-- <li><a class="m-link" href="pre-test.php"><i class="icofont-law-document"></i> <span>Pre Test</span></a>
+            </li> -->
+            <li class="collapsed"><a class="m-link" data-bs-toggle="collapse" data-bs-target="#corses-Components"
+                    href="#"><i class="icofont-law-document"></i> <span>Pre Test</span><span
+                        class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <ul class="sub-menu collapse" id="corses-Components">
+                    <li><a class="ms-link" href="pre-test.php"><span>Hitung Pre Test</span></a></li>
+                    <li><a class="ms-link" href="hasil-pre-test.php"><span>Hasil Pre Test</span></a></li>
+                </ul>
+            </li>
+            <?php } ?>
+            <?php if ($_SESSION['level_user'] == 2) { ?>
+            <li class="collapsed"><a class="m-link" data-bs-toggle="collapse" data-bs-target="#corses-Components"
+                    href="#"><i class="icofont-law-document"></i> <span>Pre Test</span><span
+                        class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
+                <ul class="sub-menu collapse" id="corses-Components">
+                    <li><a class="ms-link" href="hasil-pre-test.php"><span>Hasil Pre Test</span></a></li>
+                </ul>
             </li>
             <?php } ?>
             <?php if ($_SESSION['level_user'] == 3) { ?>
