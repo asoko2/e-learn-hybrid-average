@@ -18,11 +18,11 @@ if (isset($_SESSION['name'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Register | Adaptive Learning</title>
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <!-- <link href="assets/css/style.css" rel="stylesheet" /> -->
 </head>
 
 <body>
-    <main class="mx-auto text-center">
+    <main class="mx-auto mt-5 text-center">
         <h1>Selamat anda telah berhasil melakukan registrasi!</h1>
         <h4>Silahkan login menggunakan tombol di bawah ini</h4>
         <a href="sign-in.php" class="btn btn-primary">Login</a>
