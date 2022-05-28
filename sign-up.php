@@ -78,7 +78,7 @@ if (isset($_SESSION['name'])) {
                         placeholder="0812345678" required>
                     <label for="floatingInput">Phone Number</label>
                 </div>
-                <!-- <select class="form-select form-select-lg" id="clas_id" name="class_id"
+                <select class="form-select form-select-lg selectClass" id="class_id" name="class_id"
                     aria-label="Default select example" required>
                     <option selected>--Pilih Kelas--</option>
                     <option value="1">A</option>
@@ -86,7 +86,7 @@ if (isset($_SESSION['name'])) {
                     <option value="3">C</option>
                     <option value="4">D</option>
                     <option value="5">E</option>
-                </select> -->
+                </select>
                 <div class="form-control checkKelas">
                     <label>Pilih Kelas</label><br />
                     <div class="form-check-inline">
@@ -129,15 +129,24 @@ if (isset($_SESSION['name'])) {
 <script src="assets/js/jquery.js"></script>
 <script>
 $(document).ready(function() {
+    var requiredCheckboxes = $('.checkKelas :checkbox[required]');
     // alert('ready');
     $('#level').on('change', function() {
         $('#registerForm').removeAttr('hidden').slideDown();
         if ($(this).val() == 2) {
             $('#nipForm').show();
             $('#nisForm').hide();
+            $('.checkKelas').show();
+            $('.selectClass').hide();
+            requiredCheckboxes.prop('required', true);
+            $('.selectClass').prop('required', false);
         } else if ($(this).val() == 3) {
             $('#nisForm').show();
             $('#nipForm').hide();
+            $('.checkKelas').hide();
+            $('.selectClass').show();
+            requiredCheckboxes.prop('required', false);
+            $('.selectClass').prop('required', true);
         }
     })
     $('input[type=radio][name=tipeguru]').change(function() {
@@ -153,7 +162,7 @@ $(document).ready(function() {
     })
 
     $(function() {
-        var requiredCheckboxes = $('.checkKelas :checkbox[required]');
+
         requiredCheckboxes.on('change', function() {
             if (requiredCheckboxes.is(':checked')) {
                 requiredCheckboxes.prop('required', false);
